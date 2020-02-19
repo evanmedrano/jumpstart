@@ -3,7 +3,7 @@ def stop_spring
 end
 
 def add_gems
-  inject_into_file 'Gemfile', after: "gem 'bootsnap', '>= 1.1.0', require: false\n" do
+  inject_into_file 'Gemfile', after: "gem 'bootsnap', '>= 1.4.2', require: false\n" do
       <<-RUBY
 gem 'devise'
 gem 'devise-bootstrapped'
@@ -142,11 +142,13 @@ after_bundle do
   # Migrate
   run "rails db:reset"
   run "bundle install"
-  run "gem-ctags"
+  run "gem ctags"
   run "rails db:migrate"
   run "rails db:migrate RAILS_ENV=test"
 
+  # Git commands
   git :init
+  run "git ctags"
   git add: "."
   git commit: %Q{ -m 'Initial commit' }
 end
