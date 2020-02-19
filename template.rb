@@ -149,6 +149,7 @@ after_bundle do
   # Git commands
   git :init
   run "git ctags"
+  run "git flow init"
   git add: "."
   git commit: %Q{ -m 'Initial commit' }
 end
