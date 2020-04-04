@@ -4,7 +4,7 @@ require_relative "omniauth_callbacks_controller"
 def add_oauth_template
   add_oauth_gems
   setup_figaro
-  setup_devise
+  setup_oauth_for_devise
   setup_oauth_controller
   setup_auth_hash_service
 end
@@ -35,7 +35,7 @@ development:
     end
 end
 
-def setup_devise
+def setup_oauth_for_devise
   add_oauth_config_to_devise
   add_oauth_fields_to_user
   add_devise_module_to_users

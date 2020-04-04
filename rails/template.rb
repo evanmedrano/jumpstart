@@ -1,9 +1,9 @@
-require_relative "bootstrap/template"
-require_relative "devise/template"
-require_relative "gemfile/template"
-require_relative "oauth/template"
-require_relative "scss/template"
-require_relative "testing/template"
+require_relative "../bootstrap/template"
+require_relative "../devise/template"
+require_relative "../gemfile/template"
+require_relative "../oauth/template"
+require_relative "../scss/template"
+require_relative "../testing/template"
 
 def add_gemfile_template
   add_gems
