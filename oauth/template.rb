@@ -1,3 +1,6 @@
+require_relative "../testing/oauth/auth_hash_service_spec"
+require_relative "../testing/oauth/oauth_support"
+require_relative "../testing/oauth/user_factory"
 require_relative "auth_hash_service"
 require_relative "omniauth_callbacks_controller"
 
@@ -7,6 +10,7 @@ def add_oauth_template
   setup_oauth_for_devise
   setup_oauth_controller
   setup_auth_hash_service
+  setup_oauth_tests
 end
 
 def add_oauth_gems
@@ -44,6 +48,18 @@ end
 def setup_oauth_controller
   add_oauth_route_and_controller
   create_oauth_controller_code
+end
+
+def setup_auth_hash_service
+  run "mkdir app/services"
+  run "touch app/services/auth_hash_service.rb"
+  add_auth_hash_service_code
+end
+
+def setup_oauth_tests
+  setup_oauth_in_factories_file
+  setup_auth_hash_service_spec
+  setup_oauth_support
 end
 
 def add_oauth_config_to_devise
@@ -98,10 +114,4 @@ def create_oauth_controller_code
   run "rm app/controllers/omniauth_callbacks_controller.rb"
   run "touch app/controllers/omniauth_callbacks_controller.rb"
   add_omniauth_callbacks_controller_code
-end
-
-def setup_auth_hash_service
-  run "mkdir app/services"
-  run "touch app/services/auth_hash_service.rb"
-  add_auth_hash_service_code
 end

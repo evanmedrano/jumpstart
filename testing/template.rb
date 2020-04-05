@@ -44,7 +44,7 @@ def add_factorybot_test_helpers
 end
 
 def add_devise_test_helpers?
-  if yes?("Are you using Devise for authentication?")
+  if yes?("Is Devise being used for authentication?")
     inject_into_file "spec/rails_helper.rb", after: "FactoryBot::Syntax::Methods\n" do
       <<-RUBY
     config.include Devise::Test::IntegrationHelpers, type: :request

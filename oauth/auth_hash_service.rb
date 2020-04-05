@@ -31,7 +31,7 @@ class AuthHashService
   def create_from_auth_hash
     User.create(
       email: auth_info["email"],
-      image_url: auth_info["image_url"],
+      image_url: auth_info["image"],
       name: auth_info["name"],
       password: Devise.friendly_token[0, 20],
       auth_provider: auth_hash["provider"],
