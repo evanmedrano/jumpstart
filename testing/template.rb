@@ -30,23 +30,34 @@ def setup_rspec_generators
 end
 
 def setup_rails_helper
-  add_test_helpers
+  add_factorybot_test_helpers
+  add_devise_test_helpers?
   add_shoulda_gem_configuration
 end
 
-def add_test_helpers
+def add_factorybot_test_helpers
   inject_into_file "spec/rails_helper.rb", after: "RSpec.configure do |config|\n" do
     <<-RUBY
   config.include FactoryBot::Syntax::Methods
-  config.include Devise::Test::IntegrationHelpers, type: :request
-  config.include Devise::Test::IntegrationHelpers, type: :feature
     RUBY
+  end
+end
+
+def add_devise_test_helpers?
+  if yes?("Are you using Devise for authentication?")
+    inject_into_file "spec/rails_helper.rb", after: "FactoryBot::Syntax::Methods\n" do
+      <<-RUBY
+    config.include Devise::Test::IntegrationHelpers, type: :request
+    config.include Devise::Test::IntegrationHelpers, type: :feature
+      RUBY
+    end
   end
 end
 
 def add_shoulda_gem_configuration
   inject_into_file "spec/rails_helper.rb", after: "# config.filter_gems_from_backtrace(\"gem name\")\nend\n" do
     <<-RUBY
+
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
