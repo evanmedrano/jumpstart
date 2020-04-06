@@ -12,27 +12,19 @@ def add_oauth_support_code
   inject_into_file "spec/support/oauth_support.rb" do
     <<-RUBY
 module OauthSupport
-  def stub_oauth(user = nil, provider)
+  def stub_oauth(options = {})
     OmniAuth.config.test_mode = true
 
     OmniAuth.config.mock_auth[provider.to_sym] =
       OmniAuth::AuthHash.new({
-        :provider => "\#{provider}",
+        :provider => "facebook",
         :uid => "12345",
         :info => {
-          :email => user_email(user),
+          :email => "facebook_email@example.com",
           :image => "oauth_image.png",
           :name => "Oauth User"
         }
-      })
-  end
-
-  def user_email(user)
-    if user.nil?
-      return "oauth_user@example.com"
-    end
-
-    user.email
+      }.merge(options))
   end
 end
 
