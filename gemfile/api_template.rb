@@ -8,7 +8,7 @@ end
 def add_default_group_gems
   inject_into_file 'Gemfile', after: "# gem 'rack-cors'\n" do
       <<-RUBY
-gem 'jsonapi-resources', '0.9.0'
+gem 'active_model_serializers'
       RUBY
     end
 end
