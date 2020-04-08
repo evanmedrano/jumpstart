@@ -15,7 +15,7 @@ module OauthSupport
   def stub_oauth(options = {})
     OmniAuth.config.test_mode = true
 
-    OmniAuth.config.mock_auth[provider.to_sym] =
+    OmniAuth.config.mock_auth[:facebook] =
       OmniAuth::AuthHash.new({
         :provider => "facebook",
         :uid => "12345",

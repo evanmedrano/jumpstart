@@ -5,12 +5,39 @@ require_relative "auth_hash_service"
 require_relative "omniauth_callbacks_controller"
 
 def add_oauth_template
-  add_oauth_gems
-  setup_figaro
+  setup_oauth_gems
   setup_oauth_for_devise
   setup_oauth_controller
   setup_auth_hash_service
   setup_oauth_tests
+end
+
+def setup_oauth_gems
+  add_oauth_gems
+  setup_figaro
+end
+
+def setup_oauth_for_devise
+  add_oauth_config_to_devise
+  add_oauth_fields_to_user
+  add_devise_module_to_users
+end
+
+def setup_oauth_controller
+  add_oauth_route_and_controller
+  create_oauth_controller_code
+end
+
+def setup_auth_hash_service
+  run "mkdir app/services"
+  run "touch app/services/auth_hash_service.rb"
+  add_auth_hash_service_code
+end
+
+def setup_oauth_tests
+  setup_oauth_in_factories_file
+  setup_auth_hash_service_spec
+  setup_oauth_support
 end
 
 def add_oauth_gems
@@ -37,29 +64,6 @@ development:
   GOOGLE_OAUTH_SECRET: "YOUR_GOOGLE_SECRET"
       RUBY
     end
-end
-
-def setup_oauth_for_devise
-  add_oauth_config_to_devise
-  add_oauth_fields_to_user
-  add_devise_module_to_users
-end
-
-def setup_oauth_controller
-  add_oauth_route_and_controller
-  create_oauth_controller_code
-end
-
-def setup_auth_hash_service
-  run "mkdir app/services"
-  run "touch app/services/auth_hash_service.rb"
-  add_auth_hash_service_code
-end
-
-def setup_oauth_tests
-  setup_oauth_in_factories_file
-  setup_auth_hash_service_spec
-  setup_oauth_support
 end
 
 def add_oauth_config_to_devise
