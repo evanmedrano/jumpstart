@@ -9,7 +9,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def google_oauth2
     sign_in user_from_auth_hash
-    redirect_to root_url, notice: "Facebook authentication successful."
+    redirect_to root_url, notice: "Google authentication successful."
   end
 
   private
