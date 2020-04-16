@@ -1,3 +1,4 @@
+require_relative "../devise/api_template"
 require_relative "../gemfile/api_template"
 require_relative "../testing/template"
 
@@ -7,6 +8,15 @@ end
 
 def add_testing_template
   add_testing
+end
+
+def add_devise_api_template?
+  if yes?("Add devise api template?")
+    stop_spring
+    add_devise_api_template
+    setup_database
+    run_migrations
+  end
 end
 
 def stop_spring
@@ -43,6 +53,7 @@ add_gemfile_template
 after_bundle do
   stop_spring
   add_testing_template
+  add_devise_api_template?
   bundle_install
   setup_database
   run_migrations
