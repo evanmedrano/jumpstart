@@ -1,5 +1,6 @@
 require_relative "../devise/api_template"
 require_relative "../gemfile/api_template"
+require_relative "../oauth/template"
 require_relative "../testing/template"
 
 def add_gemfile_template
@@ -15,6 +16,13 @@ def add_devise_api_template?
     stop_spring
     add_devise_api_template
     setup_database
+    run_migrations
+  end
+end
+
+def add_oauth_template?
+  if yes?("Add oauth template?")
+    add_oauth_template
     run_migrations
   end
 end
@@ -35,10 +43,6 @@ def bundle_install
   run "bundle install"
 end
 
-def add_gem_ctags
-  run "gem ctags"
-end
-
 def run_git_commands
   git :init
   git :ctags
@@ -54,9 +58,9 @@ after_bundle do
   stop_spring
   add_testing_template
   add_devise_api_template?
+  add_oauth_template?
   bundle_install
   setup_database
   run_migrations
-  add_gem_ctags
   run_git_commands
 end

@@ -9,6 +9,8 @@ def add_default_group_gems
   inject_into_file 'Gemfile', after: "# gem 'rack-cors'\n" do
       <<-RUBY
 gem 'active_model_serializers'
+gem 'omniauth'
+gem 'gem-ctags'
       RUBY
     end
 end
