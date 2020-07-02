@@ -1,7 +1,9 @@
+require_relative "code_for_files"
+
 def add_scss_template
   add_scss_directories
   add_scss_files
-  import_scss_files
+  add_code_to_scss_files
 end
 
 def add_scss_directories
@@ -13,60 +15,22 @@ def add_scss_directories
 end
 
 def add_scss_files
-  add_scss_file_to_directory("_variables", "abstracts")
+  add_scss_file_to_directory(file: "_breakpoints", dir: "abstracts")
+  add_scss_file_to_directory(file: "_mixins", dir: "abstracts")
+  add_scss_file_to_directory(file: "_variables", dir: "abstracts")
 
-  add_scss_file_to_directory("_base", "base")
-  add_scss_file_to_directory("_typography", "base")
-  add_scss_file_to_directory("_utilities", "base")
+  add_scss_file_to_directory(file: "_base", dir: "base")
+  add_scss_file_to_directory(file: "_typography", dir: "base")
+  add_scss_file_to_directory(file: "_utilities", dir: "base")
 
-  add_scss_file_to_directory("_footer", "layouts")
-  add_scss_file_to_directory("_header", "layouts")
-end
-
-def import_scss_files
-  apply_page_reset_styling
-
-  inject_into_file "app/javascript/stylesheets/application.scss" do
-    <<-RUBY
-
-@import "abstracts/variables";
-
-@import "base/base";
-@import "base/typography";
-@import "base/utilities";
-
-@import "layouts/footer";
-@import "layouts/header";
-    RUBY
-end
-end
-
-def apply_page_reset_styling
-  inject_into_file "app/javascript/stylesheets/base/_base.scss" do
-    <<-RUBY
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  font-size: 62.5%;
-}
-
-body {
-  box-sizing: border-box;
-}
-  RUBY
-end
+  add_scss_file_to_directory(file: "_footer", dir: "layouts")
+  add_scss_file_to_directory(file: "_header", dir: "layouts")
 end
 
 def add_scss_directory(directory)
   run "mkdir app/javascript/stylesheets/#{directory}"
 end
 
-def add_scss_file_to_directory(file, directory)
-  run "touch app/javascript/stylesheets/#{directory}/#{file}.scss"
+def add_scss_file_to_directory(file:, dir:)
+  run "touch app/javascript/stylesheets/#{dir}/#{file}.scss"
 end
