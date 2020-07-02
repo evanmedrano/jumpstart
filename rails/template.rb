@@ -4,6 +4,7 @@ require_relative "../gemfile/template"
 require_relative "../oauth/template"
 require_relative "../scss/template"
 require_relative "../testing/template"
+require_relative "../views/template"
 
 def add_gemfile_template
   add_gems
@@ -83,6 +84,7 @@ after_bundle do
   stop_spring
   add_testing_template
   add_templates?
+  add_slim_template
   setup_database
   run_migrations
   add_gem_ctags

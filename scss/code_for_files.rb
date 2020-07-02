@@ -8,7 +8,7 @@ end
 
 def add_scss_base
   inject_into_file "app/javascript/stylesheets/base/_base.scss" do
-    <<-RUBY
+    <<-SCSS
 *,
 *::before,
 *::after {
@@ -24,13 +24,13 @@ html {
 body {
   box-sizing: border-box;
 }
-  RUBY
+  SCSS
   end
 end
 
 def add_scss_breakpoints
   inject_into_file 'app/javascript/stylesheets/abstracts/_breakpoints.scss' do
-    <<-RUBY
+    <<-SCSS
 $breakpoints: (
   "sm": (
     min-width: 576px
@@ -45,13 +45,13 @@ $breakpoints: (
     min-width: 1200px
   )
 ) !default;
-  RUBY
+  SCSS
   end
 end
 
 def add_scss_mixins
   inject_into_file 'app/javascript/stylesheets/abstracts/_mixins.scss' do
-    <<-RUBY
+    <<-SCSS
 // Margin
 @mixin margin($top, $right, $bottom, $left) {
   margin-top: $top;
@@ -79,13 +79,13 @@ def add_scss_mixins
         + "Available breakpoints are: \#{map-keys($breakpoints)}.";
   }
 }
-  RUBY
+  SCSS
   end
 end
 
 def add_scss_variables
   inject_into_file 'app/javascript/stylesheets/abstracts/_variables.scss' do
-    <<-RUBY
+    <<-SCSS
 // Type scale
 $fs-1: 1rem;
 $fs-2: 1.2rem;
@@ -124,13 +124,13 @@ $neutral-500: hsl(149, 8%, 25%);
 // BASIC
 $black: hsl(0, 0, 0);
 $white: hsl(0, 0, 100%);
-  RUBY
+  SCSS
   end
 end
 
 def import_scss_files
   inject_into_file "app/javascript/stylesheets/application.scss" do
-    <<-RUBY
+    <<-SCSS
 
 @import "abstracts/breakpoints";
 @import "abstracts/mixins";
@@ -142,6 +142,6 @@ def import_scss_files
 
 @import "layouts/footer";
 @import "layouts/header";
-    RUBY
+    SCSS
   end
 end
