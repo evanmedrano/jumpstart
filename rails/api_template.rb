@@ -2,53 +2,16 @@ require_relative "../devise/api_template"
 require_relative "../gemfile/api_template"
 require_relative "../oauth/template"
 require_relative "../testing/template"
-
-def add_gemfile_template
-  add_gems
-end
-
-def add_testing_template
-  add_testing
-end
+require_relative "base_template"
 
 def add_devise_api_template?
   if yes?("Add devise api template?")
+    log_status "Setting up devise for api mode."
     stop_spring
     add_devise_api_template
     setup_database
     run_migrations
   end
-end
-
-def add_oauth_template?
-  if yes?("Add oauth template?")
-    add_oauth_template
-    run_migrations
-  end
-end
-
-def stop_spring
-  run "spring stop"
-end
-
-def setup_database
-  rails_command "db:create"
-end
-
-def run_migrations
-  rails_command "db:migrate && rails db:migrate RAILS_ENV=test"
-end
-
-def bundle_install
-  run "bundle install"
-end
-
-def run_git_commands
-  git :init
-  git :ctags
-  git add: "."
-  git commit: %Q{ -m 'Initial commit' }
-  run "git flow init"
 end
 
 # Main setup
@@ -62,5 +25,6 @@ after_bundle do
   bundle_install
   setup_database
   run_migrations
+  add_gem_ctags
   run_git_commands
 end
