@@ -49,5 +49,6 @@ after_bundle do
   setup_database
   run_migrations
   add_gem_ctags
+  add_git_commit_hook
   run_git_commands
 end
