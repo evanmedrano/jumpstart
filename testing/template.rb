@@ -1,3 +1,5 @@
+require_relative "../support/logger"
+
 # For testing suite setup
 def add_testing
   setup_rspec
@@ -44,6 +46,8 @@ end
 
 def add_devise_test_helpers?
   if yes?("Is Devise being used for authentication?")
+    log_status "Adding Devise and FactoryBot test helpers."
+
     inject_into_file "spec/rails_helper.rb", after: "FactoryBot::Syntax::Methods\n" do
       <<-RUBY
     config.include Devise::Test::IntegrationHelpers, type: :request
@@ -79,6 +83,8 @@ end
 def add_factories_file_boilerplate_code
   inject_into_file "spec/factories.rb" do
     <<-RUBY
+require 'faker'
+
 FactoryBot.use_parent_strategy = false
 
 FactoryBot.define do

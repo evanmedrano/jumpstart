@@ -1,11 +1,11 @@
-require_relative "../testing/devise/user_factory"
-require_relative "../testing/devise/user_spec"
+require_relative "../testing/devise/template"
+require_relative "../testing/devise/jwt/template"
 
 def add_devise_template
   add_devise_gem
   install_devise
   setup_devise
-  setup_devise_tests
+  add_devise_testing_template
 end
 
 def add_devise_gem
@@ -29,11 +29,6 @@ def setup_devise
   setup_development_environment
   setup_root_route
   add_flash_messages_to_application_layout
-end
-
-def setup_devise_tests
-  setup_user_factory
-  setup_user_spec
 end
 
 def generate_devise_user_migration

@@ -8,6 +8,7 @@ end
 def add_default_group_gems
   inject_into_file "Gemfile", after: "'bootsnap', '>= 1.4.2', require: false\n" do
       <<-RUBY
+gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 gem 'gem-ctags'
 gem 'slim'
 gem 'slim-rails'

@@ -1,28 +1,16 @@
+require_relative '../../support/logger'
+
 def setup_user_factory
-  add_sequence_attributes
+  log_status "Adding code to the spec/factories.rb file."
+
   add_user_factory_attributes
-end
-
-def add_sequence_attributes
-  inject_into_file "spec/factories.rb", after: "FactoryBot.define do\n" do
-    <<-RUBY
-  sequence(:email) do |n|
-    "user\#{n}@example.com"
-  end
-
-  sequence(:name) do |n|
-    "name \#{n}"
-  end
-
-    RUBY
-  end
 end
 
 def add_user_factory_attributes
   inject_into_file "spec/factories.rb", after: "factory :user do\n" do
       <<-RUBY
-    email
-    name
+    email { Faker::Internet.unique.email }
+    name { Faker::Name.name }
     password { "foobar123" }
       RUBY
   end

@@ -10,14 +10,6 @@ def add_testing_template
   add_testing
 end
 
-def add_oauth_template?
-  if yes?("Add oauth template?")
-    log_status "Adding oauth files."
-    add_oauth_template
-    run_migrations
-  end
-end
-
 def stop_spring
   log_status "Stopping spring."
   run "spring stop"

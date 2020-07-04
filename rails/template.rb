@@ -1,11 +1,13 @@
+require_relative "base_template"
 require_relative "../bootstrap/template"
 require_relative "../devise/template"
 require_relative "../gemfile/template"
 require_relative "../oauth/template"
 require_relative "../scss/template"
+require_relative "../support/logger"
 require_relative "../testing/template"
+require_relative "../testing/devise/template"
 require_relative "../views/template"
-require_relative "base_template"
 
 def add_templates?
   add_bootstrap_template?
@@ -38,6 +40,14 @@ def add_devise_template?
   end
 end
 
+def add_oauth_template?
+  if yes?("Add oauth template?")
+    log_status "Adding oauth files."
+    add_oauth_template
+    run_migrations
+  end
+end
+
 # Main setup
 add_gemfile_template
 
@@ -51,4 +61,6 @@ after_bundle do
   add_gem_ctags
   add_git_commit_hook
   run_git_commands
+
+  log_status "All done! Happy hacking!"
 end
