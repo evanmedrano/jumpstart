@@ -63,4 +63,5 @@ after_bundle do
   run_git_commands
 
   log_status "All done! cd #{app_name} to begin. Happy hacking!"
+  log_status "Don't forget to update <title> in application.html.slim."
 end

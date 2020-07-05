@@ -46,7 +46,7 @@ def add_application_slim_markup
 doctype html
 html
   head
-    title = app_name
+    title = Rails.application.class.parent.to_s
     = csrf_meta_tags
     = csp_meta_tag
 
