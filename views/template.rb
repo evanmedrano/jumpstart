@@ -46,7 +46,7 @@ def add_application_slim_markup
 doctype html
 html
   head
-    title ripthescrpt
+    title = app_name
     = csrf_meta_tags
     = csp_meta_tag
 

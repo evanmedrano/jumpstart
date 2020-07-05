@@ -62,5 +62,5 @@ after_bundle do
   add_git_commit_hook
   run_git_commands
 
-  log_status "All done! Happy hacking!"
+  log_status "All done! cd #{app_name} to begin. Happy hacking!"
 end

@@ -29,7 +29,7 @@ after_bundle do
   add_git_commit_hook
   run_git_commands
 
-  log_status "All done! Happy hacking!"
+  log_status "All done! cd #{app_name} to begin. Happy hacking!"
   log_status "Make sure to generate a rake secret for devise jwt."
   log_status "Don't forget to update devise navigational_formats to '[]'."
 end
