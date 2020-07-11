@@ -43,7 +43,7 @@ describe AuthHashService do
       end
 
       it "updates a user's auth_provider and auth_uid if found via email" do
-        existing_user = create(:user, :with_google_auth)
+        existing_user = create(:user, :with_omniauth, provider: "google")
         options = { "info" => { "email" => existing_user.email,
                                 "image" => existing_user.image_url,
                                 "name" => existing_user.name } }
