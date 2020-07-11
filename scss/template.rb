@@ -1,6 +1,8 @@
 require_relative "code_for_files"
 
 def add_scss_template
+  log_status "Adding scss files."
+
   add_scss_directories
   add_scss_files
   add_code_to_scss_files

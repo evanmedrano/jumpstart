@@ -1,3 +1,4 @@
+require_relative "../testing/template"
 require_relative "jwt_template"
 require_relative "template"
 
@@ -10,6 +11,7 @@ def add_devise_api_template
   add_devise_jwt_template
   add_devise_testing_template
   add_devise_jwt_testing_template
+  add_devise_test_helpers
 end
 
 

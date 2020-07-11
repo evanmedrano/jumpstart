@@ -2,10 +2,13 @@ require_relative "../testing/devise/template"
 require_relative "../testing/devise/jwt/template"
 
 def add_devise_template
+  log_status "Setting up devise."
+
   add_devise_gem
   install_devise
   setup_devise
   add_devise_testing_template
+  add_devise_test_helpers
 end
 
 def add_devise_gem

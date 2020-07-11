@@ -32,7 +32,6 @@ end
 
 def setup_rails_helper
   add_factorybot_test_helpers
-  add_devise_test_helpers?
   add_shoulda_gem_configuration
 end
 
@@ -44,16 +43,14 @@ def add_factorybot_test_helpers
   end
 end
 
-def add_devise_test_helpers?
-  if yes?("Is Devise being used for authentication?")
-    log_status "Adding Devise and FactoryBot test helpers."
+def add_devise_test_helpers
+  log_status "Adding Devise and FactoryBot test helpers."
 
-    inject_into_file "spec/rails_helper.rb", after: "FactoryBot::Syntax::Methods\n" do
-      <<-RUBY
-    config.include Devise::Test::IntegrationHelpers, type: :request
-    config.include Devise::Test::IntegrationHelpers, type: :feature
-      RUBY
-    end
+  inject_into_file "spec/rails_helper.rb", after: "FactoryBot::Syntax::Methods\n" do
+    <<-RUBY
+  config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Devise::Test::IntegrationHelpers, type: :feature
+    RUBY
   end
 end
 

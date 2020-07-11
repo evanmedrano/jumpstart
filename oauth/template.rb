@@ -5,6 +5,8 @@ require_relative "auth_hash_service"
 require_relative "omniauth_callbacks_controller"
 
 def add_oauth_template
+  log_status "Adding oauth files."
+
   setup_oauth_gems
   setup_oauth_for_devise
   setup_oauth_controller

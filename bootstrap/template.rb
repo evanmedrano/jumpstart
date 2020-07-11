@@ -1,4 +1,6 @@
 def add_bootstrap_and_fontawesome_template
+  log_status "Adding bootstrap and fontawesome files."
+
   yarn_install_bootstrap_and_fontawesome
   add_stylesheets_to_javascript_directory
   add_imports_to_application_scss
