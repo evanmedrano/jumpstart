@@ -1,5 +1,6 @@
 def add_code_to_scss_files
   add_scss_base
+  add_scss_typography
   add_scss_breakpoints
   add_scss_mixins
   add_scss_variables
@@ -7,7 +8,7 @@ def add_code_to_scss_files
 end
 
 def add_scss_base
-  inject_into_file "app/javascript/stylesheets/base/_base.scss" do
+  inject_into_file 'app/javascript/stylesheets/base/_base.scss' do
     <<-SCSS
 *,
 *::before,
@@ -21,8 +22,23 @@ html {
   font-size: 62.5%;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 body {
   box-sizing: border-box;
+}
+  SCSS
+  end
+end
+
+def add_scss_typography
+  inject_into_file 'app/javascript/stylesheets/base/_typography.scss' do
+    <<-SCSS
+body {
+  font-family: 'Helvetica Neue', 'Helvetica', sans-serif;
 }
   SCSS
   end
@@ -129,7 +145,7 @@ $white: hsl(0, 0, 100%);
 end
 
 def import_scss_files
-  inject_into_file "app/javascript/stylesheets/application.scss" do
+  inject_into_file 'app/javascript/stylesheets/application.scss' do
     <<-SCSS
 
 @import "abstracts/breakpoints";
