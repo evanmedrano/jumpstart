@@ -5,61 +5,45 @@ require_relative "../gemfile/template"
 require_relative "../oauth/template"
 require_relative "../scss/template"
 require_relative "../support/logger"
+require_relative "../support/rails_helpers"
 require_relative "../testing/template"
 require_relative "../testing/devise/template"
 require_relative "../views/template"
 
+OPTIONAL_TEMPLATES = %w(bootstrap_and_fontawesome scss devise oauth)
+ADD_TEMPLATE_FORMAT = /^add_(.*)_template$/
+
 def add_all_templates?
-  if yes?("Add all temlpates?")
-    add_bootstrap_and_fontawesome_template
-    add_scss_template
-    stop_spring
-    add_devise_template
-    setup_database
-    add_oauth_template
-    run_migrations
+  if yes?("Add all templates?")
+    OPTIONAL_TEMPLATES.each { |template| send("add_#{template}_template") }
   else
     add_templates?
   end
 end
 
 def add_templates?
-  add_bootstrap_template?
-  add_scss_template?
-  add_devise_template?
-  add_oauth_template?
-end
+  OPTIONAL_TEMPLATES.each do |template|
+    define_singleton_method "add_#{template}_template?" do
+      if yes?("Add #{template} template?")
+        send("add_#{template}_template")
+      end
+    end
 
-def add_bootstrap_template?
-  if yes?("Add bootstrap and fontawesome template?")
-    add_bootstrap_and_fontawesome_template
+    send("add_#{template}_template?")
   end
 end
 
-def add_scss_template?
-  if yes?("Add scss template?")
-    add_scss_template
-  end
-end
+def method_missing(method)
+  super unless method.match?(ADD_TEMPLATE_FORMAT)
 
-def add_devise_template?
-  if yes?("Add devise template?")
-    stop_spring
-    add_devise_template
-    setup_database
-    run_migrations
-  end
-end
-
-def add_oauth_template?
-  if yes?("Add oauth template?")
-    add_oauth_template
-    run_migrations
+  method.match(ADD_TEMPLATE_FORMAT) do
+    log_status "Adding #{$1}."
+    send("add_#{$1}") if respond_to?("add_#{$1}")
   end
 end
 
 # Main setup
-add_gemfile_template
+add_gems_template
 
 after_bundle do
   stop_spring

@@ -1,3 +1,4 @@
+require_relative "../support/rails_helpers"
 require_relative "../testing/oauth/auth_hash_service_spec"
 require_relative "../testing/oauth/oauth_support"
 require_relative "../testing/oauth/user_factory"
@@ -12,6 +13,8 @@ def add_oauth_template
   setup_oauth_controller
   setup_auth_hash_service
   setup_oauth_tests
+
+  run_migrations
 end
 
 def setup_oauth_gems

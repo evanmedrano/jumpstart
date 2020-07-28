@@ -1,35 +1,5 @@
 require_relative "../support/logger"
 
-def add_gemfile_template
-  log_status "Adding gems."
-  add_gems
-end
-
-def add_testing_template
-  log_status "Adding test configuration."
-  add_testing
-end
-
-def stop_spring
-  log_status "Stopping spring."
-  run "spring stop"
-end
-
-def setup_database
-  log_status "Setting up the database."
-  rails_command "db:drop && rails db:create"
-end
-
-def run_migrations
-  log_status "Running migrations."
-  rails_command "db:migrate && rails db:migrate RAILS_ENV=test"
-end
-
-def bundle_install
-  log_status "Bundling Gemfile."
-  run "bundle install"
-end
-
 def add_gem_ctags
   log_status "Adding gem ctags."
   run "gem ctags"

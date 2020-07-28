@@ -1,14 +1,19 @@
+require_relative "../support/rails_helpers"
 require_relative "../testing/devise/template"
 require_relative "../testing/devise/jwt/template"
 
 def add_devise_template
   log_status "Setting up devise."
+  stop_spring
 
   add_devise_gem
   install_devise
   setup_devise
   add_devise_testing_template
   add_devise_test_helpers
+
+  setup_database
+  run_migrations
 end
 
 def add_devise_gem
