@@ -1,8 +1,6 @@
 require_relative "../support/logger"
 
-def add_slim_template
-  log_status "Replacing generated views with slim templating."
-
+def add_slim
   remove_generated_views
   add_new_views
   add_markup_to_views

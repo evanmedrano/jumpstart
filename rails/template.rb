@@ -11,11 +11,10 @@ require_relative "../testing/devise/template"
 require_relative "../views/template"
 
 OPTIONAL_TEMPLATES = %w(bootstrap_and_fontawesome scss devise oauth)
-ADD_TEMPLATE_FORMAT = /^add_(.*)_template$/
 
 def add_all_templates?
   if yes?("Add all templates?")
-    OPTIONAL_TEMPLATES.each { |template| send("add_#{template}_template") }
+    OPTIONAL_TEMPLATES.each { |template| send("add_template", template) }
   else
     add_templates?
   end
@@ -25,7 +24,7 @@ def add_templates?
   OPTIONAL_TEMPLATES.each do |template|
     define_singleton_method "add_#{template}_template?" do
       if yes?("Add #{template} template?")
-        send("add_#{template}_template")
+        send("add_template", template)
       end
     end
 
@@ -33,23 +32,14 @@ def add_templates?
   end
 end
 
-def method_missing(method)
-  super unless method.match?(ADD_TEMPLATE_FORMAT)
-
-  method.match(ADD_TEMPLATE_FORMAT) do
-    log_status "Adding #{$1}."
-    send("add_#{$1}") if respond_to?("add_#{$1}")
-  end
-end
-
 # Main setup
-add_gems_template
+add_template "gems"
 
 after_bundle do
   stop_spring
-  add_testing_template
+  add_template "testing"
   add_all_templates?
-  add_slim_template
+  add_template "slim"
   setup_database
   run_migrations
   add_gem_ctags

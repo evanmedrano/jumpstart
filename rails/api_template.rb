@@ -6,8 +6,6 @@ require_relative "../support/rails_helpers"
 require_relative "../testing/template"
 require_relative "../testing/devise/template"
 
-ADD_TEMPLATE_FORMAT = /^add_(.*)_template$/
-
 def add_devise_api_template?
   if yes?("Add devise api template?")
     log_status "Setting up devise for api mode."
@@ -18,21 +16,14 @@ def add_devise_api_template?
   end
 end
 
-def method_missing(method)
-  super unless method.match?(ADD_TEMPLATE_FORMAT)
-
-  method.match(ADD_TEMPLATE_FORMAT) do
-    log_status "Adding #{$1}."
-    send("add_#{$1}") if respond_to?("add_#{$1}")
-  end
-end
-
 # Main setup
-add_gems_template
+add_template "gems"
+# add_gems_template
 
 after_bundle do
   stop_spring
-  add_testing_template
+  add_template "testing"
+  # add_testing_template
   add_devise_api_template?
   bundle_install
   setup_database

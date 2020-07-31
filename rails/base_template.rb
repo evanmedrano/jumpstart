@@ -1,5 +1,12 @@
 require_relative "../support/logger"
 
+def add_template(template)
+  template_name = template.split("_").join(" ")
+
+  log_status "Adding #{template_name}."
+  send("add_#{template}")
+end
+
 def add_gem_ctags
   log_status "Adding gem ctags."
   run "gem ctags"
