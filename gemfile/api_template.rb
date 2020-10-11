@@ -11,6 +11,7 @@ def add_default_group_gems
 gem 'active_model_serializers'
 gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 gem 'omniauth'
+gem 'rubocop', require: false
 gem 'gem-ctags'
       RUBY
     end

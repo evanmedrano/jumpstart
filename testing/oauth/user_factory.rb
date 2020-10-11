@@ -4,7 +4,7 @@ def setup_oauth_in_factories_file
 end
 
 def add_oauth_attributes_to_user_factory
-  inject_into_file "spec/factories.rb", after: "email\n" do
+  inject_into_file "spec/factories.rb", after: "{ Faker::Internet.unique.email }\n" do
       <<-RUBY
     image_url { "test_image.png" }
       RUBY

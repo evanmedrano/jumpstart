@@ -10,6 +10,7 @@ def add_default_group_gems
       <<-RUBY
 gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 gem 'gem-ctags'
+gem 'rubocop', require: false
 gem 'slim'
 gem 'slim-rails'
       RUBY

@@ -1,6 +1,8 @@
 require_relative "base_template"
 require_relative "../devise/api_template"
 require_relative "../gemfile/api_template"
+require_relative "../git/template"
+require_relative "../rubocop/template"
 require_relative "../support/logger"
 require_relative "../support/rails_helpers"
 require_relative "../testing/template"
@@ -18,18 +20,17 @@ end
 
 # Main setup
 add_template "gems"
-# add_gems_template
 
 after_bundle do
   stop_spring
   add_template "testing"
-  # add_testing_template
   add_devise_api_template?
   bundle_install
   setup_database
   run_migrations
+  add_template "rubocop"
   add_gem_ctags
-  add_git_commit_hook
+  add_template "git"
   run_git_commands
 
   log_status "All done! cd #{app_name} to begin. Happy hacking!"

@@ -2,7 +2,9 @@ require_relative "base_template"
 require_relative "../bootstrap/template"
 require_relative "../devise/template"
 require_relative "../gemfile/template"
+require_relative "../git/template"
 require_relative "../oauth/template"
+require_relative "../rubocop/template"
 require_relative "../scss/template"
 require_relative "../support/logger"
 require_relative "../support/rails_helpers"
@@ -42,8 +44,9 @@ after_bundle do
   add_template "slim"
   setup_database
   run_migrations
+  add_template "rubocop"
   add_gem_ctags
-  add_git_commit_hook
+  add_template "git"
   run_git_commands
 
   log_status "All done! cd #{app_name} to begin. Happy hacking!"
