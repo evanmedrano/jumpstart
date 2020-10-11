@@ -93,7 +93,7 @@ def add_oauth_route
   inject_into_file "config/routes.rb", after: "devise_for :users" do
       <<-RUBY
 ,
-  controllers: { :omniauth_callbacks => 'omniauth_callbacks' }
+  controllers: { omniauth_callbacks: 'omniauth_callbacks' }
       RUBY
     end
 end
@@ -114,7 +114,7 @@ def add_devise_module_to_users
   inject_into_file "app/models/user.rb", after: ":validatable" do
     <<-RUBY
 , :omniauthable,
-         :omniauth_providers => [:facebook, :google_oauth2]
+         omniauth_providers: %i[facebook google_oauth2]
     RUBY
   end
 end

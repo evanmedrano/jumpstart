@@ -4,12 +4,12 @@ def add_omniauth_callbacks_controller_code
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook
     sign_in user_from_auth_hash
-    redirect_to root_url, notice: "Facebook authentication successful."
+    redirect_to root_url, notice: 'Facebook authentication successful.'
   end
 
   def google_oauth2
     sign_in user_from_auth_hash
-    redirect_to root_url, notice: "Google authentication successful."
+    redirect_to root_url, notice: 'Google authentication successful.'
   end
 
   private
@@ -19,7 +19,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def auth_hash
-    request.env["omniauth.auth"]
+    request.env['omniauth.auth']
   end
 end
     RUBY

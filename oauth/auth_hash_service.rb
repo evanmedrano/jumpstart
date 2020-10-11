@@ -1,8 +1,9 @@
 def add_auth_hash_service_code
-  inject_into_file "app/services/auth_hash_service.rb" do
+  inject_into_file 'app/services/auth_hash_service.rb' do
     <<-RUBY
-class AuthHashService
+# frozen_string_literal: true
 
+class AuthHashService
   def initialize(auth_hash)
     @auth_hash = auth_hash
   end
@@ -17,8 +18,8 @@ class AuthHashService
 
   def user_from_auth_hash
     User.find_by(
-      auth_provider: auth_hash["provider"],
-      auth_uid: auth_hash["uid"]
+      auth_provider: auth_hash['provider'],
+      auth_uid: auth_hash['uid']
     )
   end
 
@@ -30,30 +31,30 @@ class AuthHashService
 
   def create_from_auth_hash
     User.create(
-      email: auth_info["email"],
-      image_url: auth_info["image"],
-      name: auth_info["name"],
+      email: auth_info['email'],
+      image_url: auth_info['image'],
+      name: auth_info['name'],
       password: Devise.friendly_token[0, 20],
-      auth_provider: auth_hash["provider"],
-      auth_uid: auth_hash["uid"],
+      auth_provider: auth_hash['provider'],
+      auth_uid: auth_hash['uid']
     )
   end
 
   def update_provider_info(user)
-    if user
-      user.update(
-        auth_provider: auth_hash["provider"],
-        auth_uid: auth_hash["uid"],
-      )
-    end
+    return unless user.present?
+
+    user.update(
+      auth_provider: auth_hash['provider'],
+      auth_uid: auth_hash['uid']
+    )
   end
 
   def email_user
-    User.find_by(email: auth_info["email"])
+    User.find_by(email: auth_info['email'])
   end
 
   def auth_info
-    auth_hash.fetch("info", {})
+    auth_hash.fetch('info', {})
   end
 end
     RUBY

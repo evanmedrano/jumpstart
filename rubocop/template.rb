@@ -4,6 +4,7 @@ def add_rubocop
   inject_into_file ".rubocop.yml" do
 <<-'RUBOCOP'
 AllCops:
+  NewCops: enable
   Exclude:
     - 'vendor/**/*'
     - 'spec/**/*'
@@ -11,13 +12,13 @@ AllCops:
     - 'db/**/*'
     - 'log/**/*'
     - 'public/**/*'
+    - 'config/**/*'
+    - 'node_modules/**/*'
     - 'Gemfile'
     - '.irbrc'
     - 'Guardfile'
     - 'Rakefile'
-
-Metrics/LineLength:
-  Enabled: false
+    - 'config.ru'
 
 Metrics/ClassLength:
   Enabled: false
@@ -32,6 +33,9 @@ Metrics/ModuleLength:
   Enabled: false
 
 Style/Documentation:
+  Enabled: false
+
+Layout/LineLength:
   Enabled: false
 
 Layout/FirstParameterIndentation:
@@ -51,10 +55,10 @@ Naming/MemoizedInstanceVariableName:
   Enabled: false
 
 #TODO: enable later
-Naming/UncommunicativeMethodParamName:
+Naming/MethodParameterName:
   Enabled: false
 
-# todo: enable this later
+#TODO: enable this later
 Layout/EmptyLines:
   Enabled: false
 
@@ -66,7 +70,7 @@ Layout/SpaceInsideBlockBraces:
   EnforcedStyle: space
   EnforcedStyleForEmptyBraces: no_space
 
-# todo: how to prevent rubocop falsely finding "return and" pattern in rails
+#TODO: how to prevent rubocop falsely finding "return and" pattern in rails
 Style/AndOr:
   Enabled: false
 
