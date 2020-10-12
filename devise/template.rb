@@ -32,7 +32,7 @@ end
 def setup_devise
   generate_devise_user_migration
   generate_devise_views
-  generate_home_controller
+  generate_static_pages_controller
   setup_development_environment
   setup_root_route
   add_flash_messages_to_application_layout
@@ -54,7 +54,7 @@ def setup_development_environment
 end
 
 def setup_root_route
-  route "root to: 'home#index'"
+  route "root to: 'static_pages#home'"
 end
 
 def add_flash_messages_to_application_layout
@@ -73,6 +73,6 @@ def generate_devise_views
   generate "devise:views"
 end
 
-def generate_home_controller
-  generate "controller home index"
+def generate_static_pages_controller
+  generate "controller static_pages home"
 end
