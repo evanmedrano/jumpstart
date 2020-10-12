@@ -1,6 +1,6 @@
 def add_git
   add_git_commit_hook
-  add_git_ci_code
+  add_git_workflow_files_and_code
 end
 
 def add_git_commit_hook
@@ -31,11 +31,17 @@ echo "$TICKET $MESSAGE" > $FILE
   end
 end
 
-def add_git_ci_code
+def add_git_workflow_files_and_code
   run "mkdir .github"
   run "mkdir .github/workflows"
   run "touch .github/workflows/ci.yml"
+  run "touch config/database.yml.ci"
 
+  add_git_ci_code
+  add_ci_db_code
+end
+
+def add_git_ci_code
   inject_into_file ".github/workflows/ci.yml" do
     <<-'GIT'
 env:
@@ -77,20 +83,31 @@ jobs:
           ruby-version: ${{ env.RUBY_VERSION  }}
       - name: Install postgres client
         run: sudo apt-get install libpq-dev
+      - name: Set up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.13.0
       - name: Install dependencies
         run: |
           gem install bundler
-          bundle install
+          yarn install
+      - name: Bundle install
+        run: bundle install
+      - name: Webpack compilation
+        run: bundle exec rails webpacker:compile NODE_ENV=test
       - name: Create database
+        run: |
+          cp config/database.yml.ci config/database.yml
+          bundle exec rails db:create
+          bundle exec rails db:schema:load
         env:
+          POSTGRES_DB: ci_db_test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           RAILS_ENV: test
-        run: |
-          bundle exec rails db:create
-          bundle exec rails db:migrate
       - name: Run tests
         env:
+          POSTGRES_DB: ci_db_test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           RAILS_ENV: test
@@ -101,6 +118,21 @@ jobs:
         with:
           name: coverage-report
           path: coverage
+    GIT
+  end
+end
+
+def add_ci_db_code
+  inject_into_file "config/database.yml.ci" do
+    <<-'GIT'
+test:
+  adapter: postgresql
+  host: localhost
+  encoding: unicode
+  database: <%= ENV['POSTGRES_DB'] %>
+  pool: 20
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
     GIT
   end
 end
