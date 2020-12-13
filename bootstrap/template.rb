@@ -26,9 +26,12 @@ def add_imports_to_application_scss
 end
 
 def setup_environment_js
-  inject_into_file "config/webpack/environment.js",
-    after: "const { environment } = require('@rails/webpacker')\n" do
+  run 'mkdir config/webpack'
+  run 'touch config/webpack/environment.js'
+
+  inject_into_file "config/webpack/environment.js" do
     <<-RUBY
+const { environment } = require('@rails/webpacker')
 const webpack = require("webpack")
 
 environment.plugins.append("Provide", new webpack.ProvidePlugin({
@@ -42,7 +45,7 @@ end
 
 def setup_application_js
   inject_into_file "app/javascript/packs/application.js",
-    after: "require(\"channels\")\n" do
+    after: "import \"channels\"\n" do
     <<-RUBY
 import "@fortawesome/fontawesome-free/js/all"
 import "bootstrap"
