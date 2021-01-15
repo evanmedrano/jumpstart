@@ -49,7 +49,7 @@ def add_git_rubocop_code
 env:
   RUBY_VERSION: 2.7
 
-name: CI
+name: Rubocop
 on: [push,pull_request]
 jobs:
   rubocop-test:
@@ -74,7 +74,7 @@ def add_git_rspec_code
 env:
   RUBY_VERSION: 2.7
 
-name: CI
+name: RSpec
 on: [push,pull_request]
 jobs:
   rspec-test:
