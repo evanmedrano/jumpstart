@@ -34,15 +34,17 @@ end
 def add_git_workflow_files_and_code
   run "mkdir .github"
   run "mkdir .github/workflows"
-  run "touch .github/workflows/ci.yml"
+  run "touch .github/workflows/rspec.yml"
+  run "touch .github/workflows/rubocop.yml"
   run "touch config/database.yml.ci"
 
-  add_git_ci_code
+  add_git_rubocop_code
+  add_git_rspec_code
   add_ci_db_code
 end
 
-def add_git_ci_code
-  inject_into_file ".github/workflows/ci.yml" do
+def add_git_rubocop_code
+  inject_into_file ".github/workflows/rubocop.yml" do
     <<-'GIT'
 env:
   RUBY_VERSION: 2.7
@@ -62,9 +64,21 @@ jobs:
         run: gem install rubocop
       - name: Check code
         run: rubocop -D -c .rubocop.yml
+    GIT
+  end
+end
+
+def add_git_rspec_code
+  inject_into_file ".github/workflows/rspec.yml" do
+    <<-'GIT'
+env:
+  RUBY_VERSION: 2.7
+
+name: CI
+on: [push,pull_request]
+jobs:
   rspec-test:
     name: RSpec
-    needs: rubocop-test
     runs-on: ubuntu-18.04
     services:
       postgres:
