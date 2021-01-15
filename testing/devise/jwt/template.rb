@@ -83,7 +83,7 @@ describe 'Sessions' do
         expect(response).to have_http_status(:ok)
       end
 
-      it 'returns a valid JWT token' do
+      it 'returns an Authorization header' do
         user = create(:user)
 
         post '/login', params: params_for(user)

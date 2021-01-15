@@ -3,6 +3,10 @@ def add_rubocop
 
   inject_into_file ".rubocop.yml" do
 <<-'RUBOCOP'
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
 AllCops:
   NewCops: enable
   Exclude:
@@ -81,6 +85,9 @@ Metrics/CyclomaticComplexity:
 
 Metrics/PerceivedComplexity:
   Max: 210
+
+RSpec/ImplicitExpect:
+  Enabled: false
 RUBOCOP
   end
 end
