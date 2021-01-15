@@ -1,7 +1,7 @@
 require_relative "base_template"
 require_relative "../devise/api_template"
 require_relative "../gemfile/api_template"
-require_relative "../git/api_template"
+require_relative "../git/template"
 require_relative "../rubocop/template"
 require_relative "../support/logger"
 require_relative "../support/rails_helpers"
