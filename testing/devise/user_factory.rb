@@ -13,7 +13,6 @@ def add_user_factory_attributes
       <<-RUBY
   factory :user do
     email { Faker::Internet.unique.email }
-    name { Faker::Name.name }
     password { "foobar123" }
   end
       RUBY

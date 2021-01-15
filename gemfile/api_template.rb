@@ -39,7 +39,7 @@ def add_development_and_test_group_gems
 end
 
 def add_test_group_gems
-  inject_into_file 'Gemfile', after: "'spring-watcher-listen', '~> 2.0.0'\nend\n" do
+  inject_into_file 'Gemfile', after: "'spring'\nend\n" do
       <<-RUBY
 
 group :test do
