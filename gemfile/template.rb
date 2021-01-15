@@ -11,6 +11,7 @@ def add_default_group_gems
 gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 gem 'gem-ctags'
 gem 'rubocop', require: false
+gem 'rubocop-rails', require: false
 gem 'slim'
 gem 'slim-rails'
       RUBY
@@ -33,6 +34,7 @@ def add_development_and_test_group_gems
       <<-RUBY
   gem 'factory_bot_rails', '~> 4.10.0'
   gem 'rspec-rails', '~> 4.0.0.beta2'
+  gem 'rubocop-rspec', require: false
       RUBY
   end
 end

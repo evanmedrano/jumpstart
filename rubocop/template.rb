@@ -7,7 +7,6 @@ AllCops:
   NewCops: enable
   Exclude:
     - 'vendor/**/*'
-    - 'spec/**/*'
     - 'bin/**/*'
     - 'db/**/*'
     - 'log/**/*'
