@@ -87,7 +87,7 @@ def add_scss_mixins
 // Responsive breakpoints
 @mixin respond-to($breakpoint) {
   @if map-has-key($breakpoints, $breakpoint) {
-      @media \#{inspect(map-get($breakpoints, $breakpoint))} {
+      @media (mid-width: map-get($breakpoints, $breakpoint)) {
         @content;
       }
   } @else {
