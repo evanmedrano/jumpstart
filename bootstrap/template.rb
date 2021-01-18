@@ -26,7 +26,6 @@ def add_imports_to_application_scss
 end
 
 def setup_environment_js
-  run 'mkdir config/webpack'
   run 'touch config/webpack/environment.js'
 
   inject_into_file "config/webpack/environment.js" do

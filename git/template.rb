@@ -98,7 +98,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v1
         with:
-          node-version: 10.13.0
+          node-version: 10.17.0
       - name: Install dependencies
         run: |
           gem install bundler
