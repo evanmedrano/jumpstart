@@ -53,7 +53,6 @@ name: Rubocop
 on: [push,pull_request]
 jobs:
   rubocop-test:
-    name: Rubocop
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
@@ -78,7 +77,6 @@ name: RSpec
 on: [push,pull_request]
 jobs:
   rspec-test:
-    name: RSpec
     runs-on: ubuntu-18.04
     services:
       postgres:

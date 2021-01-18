@@ -23,7 +23,6 @@ describe AuthHashService do
       expect(user.auth_uid).to eq "1"
       expect(user.email).to eq "oauth_user@example.com"
       expect(user.image_url).to eq "test_image.png"
-      expect(user.name).to eq "Oauth User"
       expect(user).not_to be_admin
     end
 
@@ -45,8 +44,7 @@ describe AuthHashService do
       it "updates a user's auth_provider and auth_uid if found via email" do
         existing_user = create(:user, :with_omniauth, provider: "google")
         options = { "info" => { "email" => existing_user.email,
-                                "image" => existing_user.image_url,
-                                "name" => existing_user.name } }
+                                "image" => existing_user.image_url} }
 
         expect(existing_user).to eq AuthHashService.new(auth_hash(options)).
           find_or_create_user_from_auth_hash
@@ -63,8 +61,7 @@ describe AuthHashService do
       "uid" => "1",
       "info" => {
         "email" => "oauth_user@example.com",
-        "image" => "test_image.png",
-        "name" => "Oauth User",
+        "image" => "test_image.png"
       }
     }.merge(options)
   end

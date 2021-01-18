@@ -22,8 +22,7 @@ module OauthSupport
         :uid => "12345",
         :info => {
           :email => "facebook_email@example.com",
-          :image => "oauth_image.png",
-          :name => "Oauth User"
+          :image => "oauth_image.png"
         }
       }.merge(options))
   end
