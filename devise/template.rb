@@ -18,7 +18,7 @@ end
 def add_devise_gem
   inject_into_file "Gemfile", after: "'gem-ctags'\n" do
       <<-RUBY
-gem 'devise'
+gem 'devise', :git => "https://github.com/heartcombo/devise.git", ref: '8bb358cf80a632d3232c3f548ce7b95fd94b6eb2'
       RUBY
     end
 
