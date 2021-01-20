@@ -39,12 +39,7 @@ def setup_devise
 end
 
 def generate_devise_user_migration
-  generate :devise, "User", "admin:boolean"
-
-  in_root do
-    migration = Dir.glob("db/migrate/*").max_by{ |f| File.mtime(f) }
-    gsub_file migration, /:admin/, ":admin, default: false"
-  end
+  generate :devise, "User"
 end
 
 def setup_development_environment
