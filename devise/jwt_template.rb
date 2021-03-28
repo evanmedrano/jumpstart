@@ -56,19 +56,22 @@ def setup_controllers_for_devise_jwt
 end
 
 def create_jwt_blacklist_migration_file
-  run "rails g migration CreateJwtBlacklist"
+  run "rails g migration CreateJwtBlacklists jti:string:index exp:datetime"
 
-  migration_file = Dir.glob("db/migrate/*").first
+  # migration_file = Dir.glob("db/migrate/*").last
 
-  inject_into_file migration_file, after: "change\n" do
-    <<-RUBY
-    create_table :jwt_blacklist do |t|
-      t.string :jti, null: false
-      t.datetime :exp, null: false
-    end
-    add_index :jwt_blacklist, :jti
-    RUBY
-  end
+  # inject_into_file migration_file, after: "|t|\n" do
+  #   <<-RUBY
+  #     t.datetime :exp, null: false
+  #   RUBY
+  # end
+
+  # run "rails g migration AddIndexToJwtBlacklists jti:string:index"
+  # inject_into_file migration_file, after: "t.timestamps\nend\n" do
+  #   <<-RUBY
+  #   add_index :jwt_blacklists, :jti
+  #   RUBY
+  # end
 end
 
 def create_jwt_blacklist_model
@@ -79,7 +82,7 @@ def create_jwt_blacklist_model
 class JwtBlacklist < ApplicationRecord
   include Devise::JWT::RevocationStrategies::Denylist
 
-  self.table_name = 'jwt_blacklist'
+  self.table_name = :jwt_blacklists
 end
     RUBY
   end
